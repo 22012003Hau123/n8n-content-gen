@@ -1,0 +1,1230 @@
+{
+  "name": "Content_Fb",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        1000
+      ],
+      "id": "8401eb8d-9fb6-436c-9efe-309ad07935a6",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA",
+          "mode": "list",
+          "cachedResultName": "QTS content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Trang tính1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Run"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -120,
+        1000
+      ],
+      "id": "a79a57d5-d85b-4c9a-bc45-25f5b6e14b34",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "63kj6eOHsxw04bpG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=[Context]:\n- Dựa trên chủ đề bài: \"{{ $('Google Sheets').item.json['Brief topic'] }}\"\n- Tóm tắt lấy ý chính từ Nội dung bài viết: [{{ $json.output }}]. \n\n[intruction]:\nHãy tạo một image prompt để tôi có thể bỏ vào Image AI Model để tạo ra ảnh minh họa sắc nét cho bài viết đăng trên facebook của tôi. Luôn Luôn tóm tắt \"Nội dung bài viết\" cho thật ngắn gọn vẽ hình cơ bản. Hình ảnh cơ bản nhưng gói gọn khái quát nội dung. Màu hơi hướng tím phù hợp với thương hiệu công ty QTS, Quality Training Solution. Sử dụng hình ảnh là con người thật ngoài đời.\n- Prompt được sinh ra phải như 1 đoạn văn liền mạch.\n\nSize của bài facebook sẽ là 1024x1024\n",
+        "options": {
+          "systemMessage": "=You are an expert at creating images with extreme precision and sharpness. \nYou specialize in crafting sharp, emotionally resonant visuals with balanced layouts and appealing color schemes—tailored for commercial and advertising purposes in the education sector, targeting parents as the key decision-makers for study abroad programs. \n\nYÊU CẦU CỐT LÕI: Ảnh chụp người thật 100% (Photorealistic, 100% real human subject), chất lượng cao, cực kỳ sắc nét, phù hợp cho quảng cáo. \n\nChủ đề chính (Main Theme): \n\n[Mô tả rõ ràng sản phẩm, dịch vụ, hoặc thông điệp cốt lõi của chiến dịch giáo dục. Ví dụ: \"Học viên tương tác trong lớp học tiếng Anh hiện đại\", \"Giảng viên truyền cảm hứng cho sinh viên\", \"Học sinh tiểu học khám phá khoa học vui vẻ\", \"Không gian học tập lý tưởng tại trường X\".] \n\nTỷ lệ khung hình (Aspect Ratio): \n\n[Chọn một: Vuông (1:1), Ngang (16:9 hoặc 3:2), Dọc (9:16 hoặc 2:3)] \n\nGhi chú: Ngang thường dùng cho website banners, Dọc cho stories, Vuông cho social media posts. \n\nKích thước (Size): \n\n[Ví dụ: 1024x1024, 1920x1080, 1080x1920, 2048x2048] \n\nGhi chú: Chọn kích thước phù hợp với nền tảng sử dụng và yêu cầu độ chi tiết. \n\nBố cục và Góc nhìn (Composition & Perspective): \n\nGóc nhìn (Perspective): [Ví dụ: Cận cảnh (Close-up) khuôn mặt biểu cảm, Trung cảnh (Medium-shot) từ thắt lưng trở lên cho thấy sự tương tác, Toàn cảnh (Wide-shot/Full-shot) bao quát không gian và nhiều người, Góc nhìn từ trên cao (Overhead shot) cho hoạt động nhóm, Góc ngang tầm mắt (Eye-level shot) tạo sự kết nối.] \n\nBố cục (Layout Principles): [Ví dụ: Quy tắc 1/3, Đường dẫn (Leading lines), Không gian âm (Negative space), Cân bằng đối xứng/bất đối xứng. Mô tả cách sắp xếp các đối tượng chính và phụ để tạo sự hài hòa và thu hút.] \n\nBảng màu và Tông màu (Color Palette & Tone): \n\nBảng màu (Palette): [Mô tả màu sắc chủ đạo, ví dụ: \"Các màu pastel nhẹ nhàng (xanh mint, hồng phấn, vàng kem)\", \"Màu trung tính hiện đại (xám, trắng, be) kết hợp điểm nhấn màu thương hiệu (ví dụ: xanh dương đậm)\", \"Màu sắc tươi sáng, năng động (cam, vàng, xanh lá cây)\".] \n\nTông màu (Tone): [Ví dụ: Ấm áp và mời gọi, Lạnh và chuyên nghiệp, Hiện đại và tối giản, Sang trọng và đẳng cấp, Vui tươi và năng động.] \n\nYêu cầu: \"Sử dụng bảng màu nhất quán với thương hiệu nhưng vẫn làm nổi bật thông điệp và thương hiệu, tạo cảm giác thu hút, hấp dẫn, sang trọng, hiện đại.\" \n\nPhong cách hình ảnh (Visual Style): \n\nNhiếp ảnh chân thực (Photorealistic Photography). \n\n[Có thể thêm chi tiết: \"Phong cách nhiếp ảnh thương mại sáng sủa (Bright commercial photography)\", \"Phong cách lifestyle tự nhiên (Natural lifestyle photography)\", \"Ảnh chân dung chuyên nghiệp (Professional portraiture)\".] \n\nTuyệt đối không: Anime, oil painting, pixel art, 3D render nhân vật, watercolor. \n\nBối cảnh (Background/Setting): \n\n[Mô tả chi tiết: \"Lớp học hiện đại với bảng tương tác và cửa sổ lớn đón ánh sáng tự nhiên\", \"Thư viện có kệ sách cao, bàn gỗ, ánh sáng ấm\", \"Không gian làm việc chung (co-working space) sáng tạo với thiết kế mở\", \"Ngoài trời trong khuôn viên trường xanh mát\", \"Studio với phông nền trơn màu [chỉ định màu] hoặc phông nền gradient nhẹ nhàng\".] \n\nMô tả chi tiết cảnh (Detailed Scene Description): \n\nNhân vật (Characters - NGƯỜI THẬT 100%): \n\nSố lượng: [Ví dụ: 1 giảng viên và 3 học viên] \n\nĐộ tuổi, giới tính, dân tộc (nếu cần sự đa dạng): [Ví dụ: \"Giảng viên nam, khoảng 35 tuổi, châu Á\"; \"Nhóm học sinh đa dạng gồm 2 nữ, 1 nam, khoảng 10 tuổi, nhiều chủng tộc\"] \n\nTrang phục: [Ví dụ: \"Giảng viên mặc sơ mi lịch sự và quần tây\"; \"Học viên mặc đồng phục trường hoặc trang phục thoải mái, phù hợp lứa tuổi, màu sắc tươi sáng\"] \n\nBiểu cảm: [Ví dụ: \"Tươi cười, tập trung, hứng khởi, tự tin, suy tư\"] \n\nHành động: [Ví dụ: \"Giảng viên đang chỉ vào màn hình laptop, học viên đang giơ tay phát biểu, nhóm sinh viên đang thảo luận sôi nổi quanh một cuốn sách mở\", \"Học sinh đang vui vẻ lắp ráp mô hình khoa học.\"] \n\nSản phẩm/Dịch vụ (Product/Service Integration - nếu có): [Mô tả cách sản phẩm/dịch vụ được tích hợp một cách tự nhiên. Ví dụ: \"Logo trường X hiển thị tinh tế trên tài liệu học tập\", \"Học viên sử dụng tablet có giao diện ứng dụng học tập của Y\".] \n\nĐạo cụ (Props): [Ví dụ: Sách vở, laptop, máy tính bảng, bút viết, dụng cụ học tập, mô hình, cây xanh trang trí.] \n\nÁnh sáng (Lighting): Cực kỳ quan trọng cho ảnh thật. [Ví dụ: \"Ánh sáng tự nhiên mềm mại từ cửa sổ lớn bên trái\", \"Ánh sáng studio chuyên nghiệp, đều và làm nổi bật chủ thể (ví dụ: key light, fill light, rim light)\", \"Golden hour nhẹ nhàng cho cảnh ngoài trời\".] \n\nĐộ sắc nét và Chi tiết (Sharpness & Detail): \"Hình ảnh cực kỳ sắc nét, chi tiết rõ ràng trên khuôn mặt, tóc, quần áo và các vật thể trong ảnh. Không bị mờ, out nét hay nhiễu hạt (noise). Chất lượng tương đương ảnh chụp từ máy ảnh DSLR/Mirrorless chuyên nghiệp.\" \n\nVăn bản/Thông điệp (Text/Message - nếu có): \n\nNội dung: \"[Ghi rõ thông điệp ngắn gọn, ví dụ: 'Khơi Nguồn Tri Thức', 'Tên Khóa Học ABC', 'Ưu Đãi Đặc Biệt']\" \n\nVị trí: [Ví dụ: \"Góc dưới bên phải\", \"Chính giữa phía trên\"] \n\nFont chữ: [Ví dụ: \"Hiện đại, dễ đọc, không chân (sans-serif)\"] \n\nMàu sắc: [Ví dụ: \"Màu trắng hoặc màu tương phản nổi bật với nền\"] \n\nYêu cầu: \"Văn bản không chiếm quá 20% tổng diện tích ảnh.\" \n\nGhi chú đặc biệt khi tạo ảnh (Special Notes for Image Generation): \n\n\"Ưu tiên hàng đầu là tính chân thực của con người. Da người, tóc, mắt phải trông tự nhiên, không bị 'nhựa' hay 'nhân tạo'.\" \n\n\"Tập trung vào biểu cảm tự nhiên, tránh gượng gạo.\" \n\n\"Đảm bảo độ sâu trường ảnh (depth of field) hợp lý, ví dụ: chủ thể chính sắc nét, hậu cảnh có thể hơi mờ nhẹ (bokeh) để làm nổi bật chủ thể, nhưng vẫn nhận diện được bối cảnh.\" \n\n\"Không có bất kỳ yếu tố hoạt hình, vẽ tay, hay nhân vật 3D trừ khi được yêu cầu cụ thể cho đạo cụ/môi trường (và vẫn phải đảm bảo người là thật).\" \n\n\"Tránh các chi tiết phi thực tế hoặc lỗi thường gặp của AI (ví dụ: thừa ngón tay, khuôn mặt biến dạng nhẹ).\" \n\n\"Màu sắc tổng thể của ảnh phải hài hòa, dễ chịu, và chuyên nghiệp.\" "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        2200,
+        840
+      ],
+      "id": "208bde6b-8f52-44c1-a5c6-229aae7a4387",
+      "name": "Image Prompt Agent"
+    },
+    {
+      "parameters": {
+        "description": "=Use the tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        1180
+      ],
+      "id": "b8fc1ab4-e6be-4679-8340-c0c4347b5be1",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v22.0",
+        "node": "me",
+        "edge": "photos",
+        "sendBinaryData": true,
+        "binaryPropertyName": "=data",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "message",
+                "value": "={{ $('Content Creation post').item.json.output }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        1160
+      ],
+      "id": "2e6aca33-9489-4942-b3b1-e3f8ff2125aa",
+      "name": "Facebook Graph API1",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "djuHotrLS7JyIRNQ",
+          "name": "Facebook Graph account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "o3",
+          "mode": "list",
+          "cachedResultName": "o3"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1720,
+        1180
+      ],
+      "id": "04fe658f-32db-4ea4-917b-aa0a1063113d",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "p99feb3BnRkvAMUd",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cabdbf12-a81e-48e7-aadb-74021dd8aa6f",
+              "name": "topic",
+              "value": "={{ $json['Brief topic'] }}",
+              "type": "string"
+            },
+            {
+              "id": "665a6ecf-0c50-4a8e-bafa-07e6a5d16b3a",
+              "name": "numbers",
+              "value": "2",
+              "type": "string"
+            },
+            {
+              "id": "84c17b18-29d5-4fd3-9630-c4dfe38d83ad",
+              "name": "Note Research ",
+              "value": "={{ $json['Note Research '] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        20,
+        1240
+      ],
+      "id": "22a32c89-01a0-4359-90b6-d0dd7eaeb0bc",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        580,
+        1040
+      ],
+      "id": "3074fb9d-d5ed-41d3-9fff-badf7d8ca545",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Chủ đề: {{ $('Loop Over Items').item.json.title }}\nlink truy cập: {{ $json.results[0].url }}\nNội dung:{{ $json.results[0].raw_content }}\n- Trình bày nội dung bằng tiếng việt\n- Không hiển thị links hay bất kì urls nào.",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Vai trò: Bạn là một chuyên gia tư vấn dày dạn kinh nghiệm trong lĩnh vực giáo dục, đào tạo tiếng Anh, du học và các vấn đề định cư, với khả năng tổng hợp và truyền đạt thông tin một cách súc tích, dễ hiểu và chính xác.  \nNhiệm vụ: Tóm tắt và làm nổi bật các thông tin cốt lõi liên quan đến giáo dục, học tiếng Anh, cơ hội du học và quy trình định cư.  \nĐầu vào:  Tiêu đề (ví dụ: \"Học bổng du học toàn phần tại Đại học X\", \"Thay đổi mới nhất trong chính sách visa Y\", \"Phương pháp luyện thi IELTS hiệu quả\") Nội dung thô (bài báo, văn bản quy định, chia sẻ kinh nghiệm, thông tin chương trình học, v.v.) URL (nguồn tham khảo của thông tin) \nHướng dẫn:  Nghiên cứu kỹ lưỡng tiêu đề và nội dung thô được cung cấp, chú trọng vào các chi tiết đặc thù của ngành giáo dục, yêu cầu về ngôn ngữ, quy trình xin visa, điều kiện học bổng, chính sách nhập cư và các yếu tố văn hóa, xã hội liên quan đến việc học tập và sinh sống ở nước ngoài. Xây dựng một bản tóm tắt ngắn gọn, nêu bật những điểm then chốt, thông tin quan trọng và bất kỳ dữ liệu nào liên quan đến: \nGiáo dục: Các chương trình học, xếp hạng trường, phương pháp giảng dạy, yêu cầu đầu vào, học phí, cơ hội nghiên cứu. \nTiếng Anh: Các kỳ thi chuẩn hóa (IELTS, TOEFL, PTE, Duolingo, v.v.), yêu cầu về trình độ ngôn ngữ cho từng mục đích (du học, định cư, công việc), phương pháp học hiệu quả, tài liệu ôn luyện. \nDu học: Thông tin về các quốc gia, trường đại học, chương trình học bổng, quy trình nộp hồ sơ, thủ tục xin visa du học, chi phí sinh hoạt, lời khuyên về thích nghi văn hóa và cuộc sống. Định cư: Các chương trình định cư (diện tay nghề, đầu tư, đoàn tụ gia đình, v.v.), yêu cầu về hồ sơ, điểm số di trú, quy trình pháp lý, chính sách nhập cư mới nhất, lời khuyên về hòa nhập cộng đồng và tìm kiếm việc làm. Đảm bảo bản tóm tắt mạch lạc, cung cấp thông tin chính xác và hữu ích cho đối tượng độc giả đang tìm hiểu hoặc cần đưa ra quyết định liên quan đến học tập, nâng cao trình độ tiếng Anh, du học hoặc định cư. Nhấn mạnh bất kỳ xu hướng nổi bật, thay đổi quan trọng trong chính sách (ví dụ: luật di trú mới, tiêu chí xét học bổng cập nhật), hoặc các nguồn lực, tổ chức hỗ trợ uy tín được đề cập trong nội dung. Trình bày tóm tắt theo một cấu trúc rõ ràng, có thể sử dụng gạch đầu dòng hoặc các đoạn văn ngắn gọn để người đọc dễ dàng nắm bắt thông tin.\n\n \nĐịnh dạng đầu ra:  Một bản tóm tắt súc tích, dễ hiểu về các vấn đề giáo dục, tiếng Anh, du học hoặc định cư. Sử dụng định dạng văn bản thuần túy (plain text), không chứa các ký tự định dạng đặc biệt như dấu sao (*, **), dấu thăng (#), v.v."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1040,
+        1040
+      ],
+      "id": "56e03f38-4b71-4ded-8513-1b86d485c465",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3aaea04a-f975-4520-9a89-8e0c400fdccf",
+              "name": "news",
+              "value": "={{$itemIndex+1}}.{{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        700
+      ],
+      "id": "afe33c3e-9e21-455a-bb01-4e504302212e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "writer",
+            "type": "anyone",
+            "allowFileDiscovery": true
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3220,
+        960
+      ],
+      "id": "ccef700f-451f-4f0f-bc6f-87d03d33662c",
+      "name": "share quyền1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "6EMMO30VF3mYbEfU",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Search links ",
+        "height": 460,
+        "width": 600
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        940
+      ],
+      "id": "d142af03-ba75-46dc-9741-cfd829b4e5ce",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Loop for extracting data from links  ",
+        "height": 540,
+        "width": 840,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        520,
+        940
+      ],
+      "id": "c47ecb04-22d9-485e-a685-2376b854ed7e",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Merge data ",
+        "height": 280,
+        "width": 720,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        760,
+        600
+      ],
+      "id": "3ed775c0-7a19-42ea-b083-1e941b97355a",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Content generation",
+        "height": 580,
+        "width": 440
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        780
+      ],
+      "id": "021144d2-5e24-4188-a651-7c3509889741",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Prompt Image",
+        "height": 480,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        780
+      ],
+      "id": "cba1ff3d-4b3e-40af-bac0-2f9e7e1559e4",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer <token>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"{{ $json.topic }}\",\n  \"topic\": \"general\",\n  \"search_depth\": \"advanced\",\n  \"chunks_per_source\": 3,\n  \"max_results\": {{ $json.numbers }},\n  \"time_range\": null,\n  \"days\": 7,\n  \"include_answer\": true,\n  \"include_raw_content\": true,\n  \"include_images\": false,\n  \"include_image_descriptions\": false,\n  \"include_domains\": [{{ $json['Note Research '] }}],\n  \"exclude_domains\": []\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        1000
+      ],
+      "id": "2c3d077b-0fa3-44d5-8c92-e8d5d39da9af",
+      "name": "Search",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "niy3IosT1S2ZO9DK",
+          "name": "Tavily"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/extract",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer <token>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "urls",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "include_images",
+              "value": "false"
+            },
+            {
+              "name": "extract_depth",
+              "value": "advanced"
+            },
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        860,
+        1040
+      ],
+      "id": "798024ed-43a0-4dea-b384-39ed0c673e8e",
+      "name": "Extract",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "niy3IosT1S2ZO9DK",
+          "name": "Tavily"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        840,
+        700
+      ],
+      "id": "d81a75b7-7db4-4313-8802-d8e6d25ce31d",
+      "name": "Này cũng vậy",
+      "webhookId": "67f0becf-c14b-444c-8f26-7784ff8837f5"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "results",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        320,
+        1000
+      ],
+      "id": "da002a5a-c870-4a27-a7e6-d6daf6d76e17",
+      "name": "Chia để trị"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "news"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        700
+      ],
+      "id": "a4f81817-caaf-4240-ad95-315d3c6056f6",
+      "name": "Reunion"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1080,
+        1320
+      ],
+      "id": "8af3419a-b3ca-49e1-9c8d-65e88dd5ce01",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "p99feb3BnRkvAMUd",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA",
+          "mode": "list",
+          "cachedResultName": "QTS content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Trang tính1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Brief topic": "={{ $('Google Sheets').item.json['Brief topic'] }}",
+            "Drive ảnh": "={{ $('Upload Image1').item.json.id }}",
+            "bài content": "={{ $('Content Creation post').item.json.output }}"
+          },
+          "matchingColumns": [
+            "Brief topic"
+          ],
+          "schema": [
+            {
+              "id": "Tên Brand",
+              "displayName": "Tên Brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Description",
+              "displayName": "Brand Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Brand image",
+              "displayName": "Brand image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Target audience",
+              "displayName": "Target audience",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Solution",
+              "displayName": "Solution",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Target Market",
+              "displayName": "Target Market",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Brief topic",
+              "displayName": "Brief topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Note Research ",
+              "displayName": "Note Research ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "lưu ý khi viết",
+              "displayName": "lưu ý khi viết",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Facebook post ID",
+              "displayName": "Facebook post ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Drive ảnh",
+              "displayName": "Drive ảnh",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "bài content",
+              "displayName": "bài content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3420,
+        960
+      ],
+      "id": "54318396-6706-4095-8272-8e1dc0d2d559",
+      "name": "GG sheet Root",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "63kj6eOHsxw04bpG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA",
+          "mode": "list",
+          "cachedResultName": "QTS content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Trang tính1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kvYVypozyLjhwyq4-RyHAhIuQrrZGBGujq-Tud2EtTA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Complete",
+            "Brief topic": "={{ $('Google Sheets').item.json['Brief topic'] }}",
+            "Facebook post ID": "=ID: {{ $json.id }}; Post_ID:{{ $json.post_id }}"
+          },
+          "matchingColumns": [
+            "Brief topic"
+          ],
+          "schema": [
+            {
+              "id": "Tên Brand",
+              "displayName": "Tên Brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Description",
+              "displayName": "Brand Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Brand image",
+              "displayName": "Brand image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Target audience",
+              "displayName": "Target audience",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Solution",
+              "displayName": "Solution",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Target Market",
+              "displayName": "Target Market",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Brief topic",
+              "displayName": "Brief topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Note Research ",
+              "displayName": "Note Research ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "lưu ý khi viết",
+              "displayName": "lưu ý khi viết",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Facebook post ID",
+              "displayName": "Facebook post ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Drive ảnh",
+              "displayName": "Drive ảnh",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bài content",
+              "displayName": "bài content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3420,
+        1160
+      ],
+      "id": "dccf257a-0865-4505-b9f0-a1eca6a61848",
+      "name": "GG sheet Root1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "63kj6eOHsxw04bpG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Sử dụng nội dung từ  {{ $json.news }} để viết nội dung cho chủ đề {{ $('Google Sheets').item.json[\"Brief topic\"] }}\n- Không được nhắc đến tên hay thông tin về tổ chức khác ngoại trừ QTS- Quality Training Solutions\n- Viết bằng tiếng Việt.\n- Đưa những statistic, dữ liệu, fact vào trong bài, sử dụng các icon phù hợp nhàm làm cho bài viết thú vụ hơn. Biểu diễn một cách tự nhiên nhất có thể. viết hoa hoặc in đậm rõ ràng.",
+        "options": {
+          "systemMessage": "=Overview \nYou're an AI agent specializing in crafting professional, educational, and engaging social media posts (Facebook, LinkedIn) based on user-provided topics, while matching the brand's tone and following all content guidelines. \n\nTools \n• Tavily: Use this tool to find the latest, accurate, detailed information on the requested topic. \n• Think: Use this tool before drafting (just before the final step) to analyze data and choose the best approach for the post. \n\nBrand Information: \n\n- Target Audience: {{ $('Google Sheets').item.json['Target audience'] }} \n\n- Brand name: {{ $('Google Sheets').item.json['Tên Brand'] }} \n\n- Brand description: {{ $('Google Sheets').item.json['Brand Description'] }} \n\n- Brand image: {{ $('Google Sheets').item.json['Brand image'] }} \n\n- Solution: {{ $('Google Sheets').item.json.Solution }} \n\n- Target market: {{ $('Google Sheets').item.json['Target Market'] }} \n\nObjectives \n• After researching the latest, accurate information on the topic with Tavily, write a value-driven post for the target audience (no selling; mention the brand only naturally). \n\n• Always begin by conducting a real-time search using the Tavily tool to gather the most accurate, up-to-date information on the topic. After that, analyze the Content Examples to • Emulate the writing style and the tone. \n\n• The post should be written to appeal to the provided target audience. \n• The post must satisfy all of these criteria: \n\nBased on the research, create a well-structured Facebook post that meets the following requirements: \n\nStart with a professional, emotionally engaging hook (used as the post title), with a line break between the hook and the body content. Do not begin with “hey,” “hi,” or “hello.” \n\nUse friendly and conversational pronouns like \"mình\" and \"bạn\" or \"TAG\" and \"bạn.\" \n\nUse emojis only when necessary and keep them minimal. \n\nEmulate the writing style from the provided sample posts. \n\nPrioritize data, statistics, real-life examples, or case studies to support your points (if available). \n\nEnd with 3 relevant hashtags. \n\nBreak the content into short paragraphs for easy reading on mobile devices. \n\nEnd with a clear CTA (e.g., ask for feedback, thoughts, or shares). \n\nKeep the content between 150–300 words. For complex topics, explain them clearly and concisely. \n\nMaintain a conversational, friendly tone in Vietnamese, using correct grammar and incorporating powerful words to boost engagement. \n\n \n\nOutput Instructions \n• Output only the final Facebook/LinkedIn post as plain text (no markdown formatting). \n• Do not include explanations, notes, or any content other than the official post. \n\nExample Workflow \n• Receive the topic (e.g., “ROI of warehouse automation”). \n• Use Tavily to search for the latest information or case studies. \n• Retrieve the brand/author content examples. \n• Analyze writing style, tone, and related elements. \n• Draft the Facebook/LinkedIn post using all collected information. \n• Format the post with source citations (if any), clear structure, hashtags (if needed), a CTA, and in full compliance with the content guidelines. \n\nFinal Reminder \n• Focus entirely on providing value to the reader; do not sell or overtly promote (mention the brand only naturally). \n• Optimize the content for the target audience and platform (Facebook/LinkedIn). \n\nMain Improvements \n• More concise: Removed repetitive, lengthy, and unnecessary parts so the prompt is easier to read and clearer. \n• Clearer structure: Divided the sections under distinct headings so the AI can understand and follow the requirements. \n• Specific instructions: Added details about not selling, mentioning the brand only naturally, and emphasizing a conversational tone. \n• Coherent language: Adopted precise, professional language, avoiding repetition and grammatical errors. "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        1720,
+        880
+      ],
+      "id": "979a1696-8ad2-42dc-90ee-492554b0daef",
+      "name": "Content Creation post"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=data",
+        "name": "={{ $('Google Sheets').item.json[\"Brief topic\"] }}",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1QIuj5BGVHDnsajWbh1WLHFRIIi9XUvmP",
+          "mode": "list",
+          "cachedResultName": "KN",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1QIuj5BGVHDnsajWbh1WLHFRIIi9XUvmP"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2980,
+        960
+      ],
+      "id": "3e1f6053-9323-4b0a-ad29-3e7bb4851c22",
+      "name": "Upload Image1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "6EMMO30VF3mYbEfU",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Upload, Post, Update\n",
+        "height": 780,
+        "width": 720
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2900,
+        740
+      ],
+      "id": "544252da-31ca-4846-9ff6-8cda38fd7e03",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "AIzaSyCd_yh3TarkiAbc1PW3f7rXlrxswC53WIs"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output }}\"\n    }\n  ],\n  \"parameters\": {\n    \"sampleCount\": 1\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2540,
+        960
+      ],
+      "id": "714ce2a9-f5ce-45ca-bd4f-da76e31dd295",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "predictions[0].bytesBase64Encoded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2740,
+        1040
+      ],
+      "id": "d1f0c9e0-dd3d-4cca-85a3-53a3d2c07a2b",
+      "name": "Convert to File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Prompt Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Content Creation post",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Graph API1": {
+      "main": [
+        [
+          {
+            "node": "GG sheet Root1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Image Prompt Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Content Creation post",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Này cũng vậy",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Reunion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "share quyền1": {
+      "main": [
+        [
+          {
+            "node": "GG sheet Root",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search": {
+      "main": [
+        [
+          {
+            "node": "Chia để trị",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Này cũng vậy": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chia để trị": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reunion": {
+      "main": [
+        [
+          {
+            "node": "Content Creation post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Creation post": {
+      "main": [
+        [
+          {
+            "node": "Image Prompt Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image1": {
+      "main": [
+        [
+          {
+            "node": "share quyền1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Upload Image1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Facebook Graph API1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "732b0ed7-5180-479c-8bac-bdc1fbd0087d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8e5ab1ef70ef9c8fab82ccb6483e74a1b495ef77d5af0a50c7a1fcb299b6fb46"
+  },
+  "id": "pAuUIGlLX3vE0JTh",
+  "tags": []
+}
